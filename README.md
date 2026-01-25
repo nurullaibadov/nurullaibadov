@@ -114,30 +114,6 @@
 
 ---
 
-## 🏆 Achievements
-
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=nurullaibadov&theme=darkhub&no-frame=true&row=1"/>
-</p>
-
----
-
-## 🔝 Top Contributions
-
-<p align="center">
-  <img src="https://github-contributor-stats.vercel.app/api?username=nurullaibadov&limit=5&theme=dark&combine_all_yearly_contributions=true"/>
-</p>
-
----
-
-## 👀 Profile Views
-
-<p align="center">
-  <img src="https://visitcount.itsvg.in/api?id=nurullaibadov&label=Profile%20Views&color=0&icon=5&pretty=true"/>
-</p>
-
----
-
 ## ⚡ Personal Motto
 
 > **“Build real systems. Solve real problems. Ship clean code.”**
