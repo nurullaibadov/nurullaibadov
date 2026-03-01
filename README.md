@@ -14,7 +14,7 @@
   <a href="https://linkedin.com/in/nurulla-ibadov-7971732a5" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white"/>
   </a>
-  <a href="https://instagram.com/nikomoserr" target="_blank">
+  <a href="https://www.instagram.com/1badovic" target="_blank">
     <img src="https://img.shields.io/badge/Instagram-E4405F?style=flat&logo=instagram&logoColor=white"/>
   </a>
 </p>
