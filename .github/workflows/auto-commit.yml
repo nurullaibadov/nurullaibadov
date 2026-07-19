@@ -2,23 +2,25 @@ name: Auto Commit
 on:
   schedule:
     - cron: '0 0 * * *'
-    - cron: '20 1 * * *'
-    - cron: '40 2 * * *'
-    - cron: '0 4 * * *'
-    - cron: '20 5 * * *'
-    - cron: '40 6 * * *'
-    - cron: '0 8 * * *'
-    - cron: '20 9 * * *'
-    - cron: '40 10 * * *'
+    - cron: '12 1 * * *'
+    - cron: '24 2 * * *'
+    - cron: '36 3 * * *'
+    - cron: '48 4 * * *'
+    - cron: '0 6 * * *'
+    - cron: '12 7 * * *'
+    - cron: '24 8 * * *'
+    - cron: '36 9 * * *'
+    - cron: '48 10 * * *'
     - cron: '0 12 * * *'
-    - cron: '20 13 * * *'
-    - cron: '40 14 * * *'
-    - cron: '0 16 * * *'
-    - cron: '20 17 * * *'
-    - cron: '40 18 * * *'
-    - cron: '0 20 * * *'
-    - cron: '20 21 * * *'
-    - cron: '40 22 * * *'
+    - cron: '12 13 * * *'
+    - cron: '24 14 * * *'
+    - cron: '36 15 * * *'
+    - cron: '48 16 * * *'
+    - cron: '0 18 * * *'
+    - cron: '12 19 * * *'
+    - cron: '24 20 * * *'
+    - cron: '36 21 * * *'
+    - cron: '48 22 * * *'
   workflow_dispatch: {}
 # Eyni anda yalnız BİR run işləsin. Digərləri avtomatik növbəyə düşür,
 # beləliklə iki run heç vaxt eyni fayla eyni anda toxunmur (konflikt kökü budur).
@@ -46,16 +48,17 @@ jobs:
       - name: Log yaz, commit et və push et (tam retry qorumalı)
         run: |
           set -e
-          mkdir -p auto-commit-log
           MAX_TRIES=10
           for i in $(seq 1 "$MAX_TRIES"); do
             echo "=== Cəhd $i / $MAX_TRIES ==="
             # Hər cəhddə repo-nu 100% təmiz, ən son remote vəziyyətinə sıfırla.
-            # Bu addım konfliktin kökündən qarşısını alır.
             git fetch origin main
             git checkout main
             git reset --hard origin/main
             git clean -fd
+            # ÖNƏMLİ: qovluq clean/reset-dən SONRA yaradılır, çünki
+            # untracked qovluq git clean -fd tərəfindən silinir.
+            mkdir -p auto-commit-log
             # Yeni log sətri əlavə et
             echo "Commit zamanı: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> auto-commit-log/log.txt
             git add auto-commit-log/log.txt
