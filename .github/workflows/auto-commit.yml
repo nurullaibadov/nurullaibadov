@@ -2,7 +2,52 @@ name: Auto Commit
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    # 45 tetikleyici = gunde tam 45 commit denemesi (~32 dakikada bir)
+    - cron: "0 0 * * *"
+    - cron: "32 0 * * *"
+    - cron: "4 1 * * *"
+    - cron: "36 1 * * *"
+    - cron: "8 2 * * *"
+    - cron: "40 2 * * *"
+    - cron: "12 3 * * *"
+    - cron: "44 3 * * *"
+    - cron: "16 4 * * *"
+    - cron: "48 4 * * *"
+    - cron: "20 5 * * *"
+    - cron: "52 5 * * *"
+    - cron: "24 6 * * *"
+    - cron: "56 6 * * *"
+    - cron: "28 7 * * *"
+    - cron: "0 8 * * *"
+    - cron: "32 8 * * *"
+    - cron: "4 9 * * *"
+    - cron: "36 9 * * *"
+    - cron: "8 10 * * *"
+    - cron: "40 10 * * *"
+    - cron: "12 11 * * *"
+    - cron: "44 11 * * *"
+    - cron: "16 12 * * *"
+    - cron: "48 12 * * *"
+    - cron: "20 13 * * *"
+    - cron: "52 13 * * *"
+    - cron: "24 14 * * *"
+    - cron: "56 14 * * *"
+    - cron: "28 15 * * *"
+    - cron: "0 16 * * *"
+    - cron: "32 16 * * *"
+    - cron: "4 17 * * *"
+    - cron: "36 17 * * *"
+    - cron: "8 18 * * *"
+    - cron: "40 18 * * *"
+    - cron: "12 19 * * *"
+    - cron: "44 19 * * *"
+    - cron: "16 20 * * *"
+    - cron: "48 20 * * *"
+    - cron: "20 21 * * *"
+    - cron: "52 21 * * *"
+    - cron: "24 22 * * *"
+    - cron: "56 22 * * *"
+    - cron: "28 23 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -16,7 +61,6 @@ jobs:
   auto-commit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -36,58 +80,35 @@ jobs:
         shell: bash
         run: |
           set -Eeuo pipefail
-
           BRANCH="main"
           MAX_RETRIES=10
-
           for ((attempt=1; attempt<=MAX_RETRIES; attempt++)); do
-
             echo "========== Attempt ${attempt}/${MAX_RETRIES} =========="
-
             git fetch origin "${BRANCH}"
-
             git checkout "${BRANCH}"
-
             git reset --hard "origin/${BRANCH}"
-
             git clean -fd
-
             mkdir -p auto-commit-log
-
             TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-
             echo "${TIMESTAMP}" >> auto-commit-log/log.txt
-
             git add auto-commit-log/log.txt
-
             if git diff --cached --quiet; then
               echo "No changes found."
               exit 0
             fi
-
             git commit -m "Auto Commit ${TIMESTAMP}"
-
             if git push origin "${BRANCH}"; then
               echo "Push successful."
               exit 0
             fi
-
             echo "Push failed."
-
             git fetch origin "${BRANCH}"
-
             git rebase "origin/${BRANCH}" || {
               git rebase --abort || true
             }
-
             WAIT=$((RANDOM % 8 + 5))
-
             echo "Retrying after ${WAIT} seconds..."
-
             sleep "${WAIT}"
-
           done
-
           echo "Failed after ${MAX_RETRIES} attempts."
-
           exit 1
